@@ -1,0 +1,36 @@
+{% load staticfiles %}
+<html>
+    <head>
+        <title>WenTao blog</title>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+    <head>
+    <body>
+        <div>
+            <h1><a href="">WenTao Blog</a> </h1>
+        </div>
+
+        <div>
+            <p>published: 24.06.2017,9:54</p>
+            <h2><a href="">My first post</a> </h2>
+            <p> THis is the first, will be more!!!</p>
+        </div>
+
+        <div>
+            <p>published: 24.06.2017,9:57</p>
+            <h2><a href="">My second post</a> </h2>
+            <p> THis is the second, lalala</p>
+        </div>
+
+        {% for post in posts %}
+        <div>
+            <p>published: {{ posts.published_date }}</p>
+            <h2><a href="">{{post.title}}</a> </h2>
+            <p> {{ post.text|linebreaksbr }}</p>
+        </div>
+        {% endfor %}
+
+    </body>
+</html>
+
