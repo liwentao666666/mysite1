@@ -2,3 +2,4 @@
 *.py[cod]
 *.swp
 volumename
+db.sqlite3

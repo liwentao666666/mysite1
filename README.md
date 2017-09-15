@@ -8,3 +8,7 @@ currently work on four functions:
 2.blog detail
 3.create a blog
 4.edit a blog
+
+
+can use print with command:
+python manage.py runserver --noreload 0.0.0.0:80
