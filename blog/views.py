@@ -14,6 +14,7 @@ def post_list(request):
 
 def post_detail(request,pk):
     post = get_object_or_404(Post,pk=pk)
+    print(pk)
     return render(request,'blog/post_detail.html',{'post':post})
 
 @login_required
@@ -30,22 +31,19 @@ def post_new(request):
         form=PostForm()
     return render(request,'blog/post_edit.html',{'form':form})
 
+
 @login_required
-def post_edit(request,pk):
-    logging.debug('aaaaaaaaaaa')
-    post=get_object_or_404(Post,pk=pk)
-    print('aaaaaaaaaaa')
-    logging.debug('aaaaaaaaaaa')
-    print(request.method)
+def post_edit(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    print(str(request.method))
     if request.method == 'POST':
-        print(request.method)
-        form = PostForm(request.POST,instance=post)
+        print('aa')
+        form = PostForm(request.POST, instance=post)
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
-            post.published_date=timezone.now()
             post.save()
-            return redirect('post_detail',pk=post.pk)
+            return redirect('blog.views.post_detail', pk=post.pk)
     else:
-        form=PostForm()
-    return render(request,'blog/post_edit.html',{'form':form})
+        form = PostForm(instance=post)
+    return render(request, 'blog/post_edit.html', {'form': form})
