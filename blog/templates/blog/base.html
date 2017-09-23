@@ -1,4 +1,5 @@
 {% load staticfiles %}
+{% load blog_tags %}
 <html>
     <head>
         <title>WenTao blog</title>
@@ -29,24 +30,129 @@
             {% endif %}
             <h1><a href="">Wentao Blog</a> </h1>
         </div>
-        <!--
-        {% for post in posts %}
-            <div class="post">
-                <p>published: {{ posts.published_date }}</p>
-                <h1><a href="">{{post.title}}</a> </h1>
-                <p> {{ post.text|linebreaksbr }}</p>
-            </div>
-        {% endfor %}
-        //-->
+        <div class="copyrights">Collect from <a href="http://www.cssmoban.com/">网页模板</a></div>
+        <div class="copyrights">Modified by <a href="http://zmrenwu.com/">追梦人物的博客</a></div>
         <div class="content container">
             <div class="row">
-                <div class="col-md-8">
+                <main class="col-md-8">
                     {% block content %}
-                    {% endblock %}
-                </div>
+                    {% endblock content %}
+                </main>
+                <aside class="col-md-4">
+                    {% block toc %}
+                    {% endblock toc %}
+                    <div class="widget widget-recent-posts">
+                        <h3 class="widget-title">最新文章</h3>
+                        {% get_recent_posts as recent_post_list %}
+                        <ul>
+                            {% for post in recent_post_list %}
+                            <li>
+                                <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                            </li>
+                            {% empty %}
+                            暂无文章!
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="widget widget-archives">
+                        <h3 class="widget-title">归档</h3>
+                        {% archives as date_list %}
+                        <ul>
+                            {% for date in date_list %}
+                            <li>
+                                <a href="{% url 'archives' date.year date.month %}">{{ date.year }} 年 {{ date.month}} 月 </a>
+                            </li>
+                            {% empty %}
+                            暂无文章!
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                    <div class="widget widget-category">
+                        <h3 class="widget-title">分类</h3>
+                        {% get_categories as category_list %}
+                        <ul>
+                            {% for category in category_list %}
+                            <li>
+                                <!--a href="#">{{ category.name }}<span class="post-count">(13)</span></a-->
+                                <a href="{% url 'category' category.pk %}">{{ category.name }}</a>
+                            </li>
+                            {% empty %}
+                            暂无文章!
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                    <div class="widget widget-tag-cloud">
+                        <h3 class="widget-title">标签云</h3>
+                        <ul>
+                            <li>
+                                <a href="#">Django</a>
+                            </li>
+                            <li>
+                                <a href="#">Python</a>
+                            </li>
+                            <li>
+                                <a href="#">Java</a>
+                            </li>
+                            <li>
+                                <a href="#">笔记</a>
+                            </li>
+                            <li>
+                                <a href="#">文档</a>
+                            </li>
+                            <li>
+                                <a href="#">AngularJS</a>
+                            </li>
+                            <li>
+                                <a href="#">CSS</a>
+                            </li>
+                            <li>
+                                <a href="#">JavaScript</a>
+                            </li>
+                            <li>
+                                <a href="#">Snippet</a>
+                            </li>
+                            <li>
+                                <a href="#">jQuery</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="rss">
+                        <a href=""><span class="ion-social-rss-outline"></span> RSS 订阅</a>
+                    </div>
+                </aside>
             </div>
         </div>
-		<!--script src="{% static 'js/script.js' %}"></script-->
+        <footer id="site-footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="copyright">&copy 2017 - 采集自<a href="http://www.cssmoban.com/"
+                                                                target="_blank" title="模板之家">模板之家</a>
+                            - 由<a href="http://zmrenwu.com/" title="网页模板" target="_blank">追梦人物的博客</a>修改
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        
+        
+        <!-- Mobile Menu -->
+        <div class="overlay overlay-hugeinc">
+            <button type="button" class="overlay-close"><span class="ion-ios-close-empty"></span></button>
+            <nav>
+                <ul>
+                    <li><a href="{% url 'post_list' %}">首页</a></li>
+                    <li><a href="full-width.html">博客</a></li>
+                    <li><a href="about.html">关于</a></li>
+                    <li><a href="contact.html">联系</a></li>
+                </ul>
+            </nav>
+        </div>
+        
+        <script src="{% static 'js/script.js' %}"></script>
     </body>
+
 </html>
 
