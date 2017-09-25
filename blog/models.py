@@ -1,4 +1,6 @@
 from __future__ import unicode_literals
+import markdown
+from django.utils.html import strip_tags
 
 from django.db import models
 from django.urls import reverse
@@ -24,12 +26,23 @@ class Post(models.Model):
     author = models.ForeignKey('auth.User')
     title = models.CharField(max_length=200)
     text = models.TextField()
+    excerpt = models.CharField(max_length=200,blank=True)
     created_date = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(blank=True,null=True)
     excerpt = models.CharField(max_length=200,blank=True)
     category = models.ForeignKey(Category,null=True)
     tags = models.ManyToManyField(Tag, blank = True)
     views = models.PositiveIntegerField(default=0)
+
+    def save(self, *args, **kwargs):
+        if not self.excerpt:
+            md=markdown.Markdown(extentions=[
+                'markdown.extensions.extra',
+                'markdown.extensions.codehilite',
+                ])
+            self.excerpt = strip_tags(md.convert(self.text))[:54]
+        super(Post, self).save(*args, **kwargs)
+
 
     def publish(self):
         self.published_date = timezone.now()
