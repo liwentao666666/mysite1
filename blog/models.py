@@ -29,6 +29,7 @@ class Post(models.Model):
     excerpt = models.CharField(max_length=200,blank=True)
     category = models.ForeignKey(Category,null=True)
     tags = models.ManyToManyField(Tag, blank = True)
+    views = models.PositiveIntegerField(default=0)
 
     def publish(self):
         self.published_date = timezone.now()
@@ -39,6 +40,10 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+    def increase_views(self):
+        self.views += 1
+        self.save(update_fields=['views'])
 
 class Comment(models.Model):
     post = models.ForeignKey('blog.Post', related_name='comments')

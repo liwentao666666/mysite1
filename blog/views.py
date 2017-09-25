@@ -14,6 +14,7 @@ def post_list(request):
 
 def post_detail(request,pk):
     post = get_object_or_404(Post,pk=pk)
+    post.increase_views()
     post.text = markdown.markdown(post.text,
                                   extensions=[
                                       'markdown.extensions.extra',

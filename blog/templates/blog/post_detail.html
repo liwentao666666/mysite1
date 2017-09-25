@@ -12,6 +12,14 @@
         <a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
 	    <a class="btn btn-default" href="{% url 'post_remove' pk=post.pk %}"><span class="glyphicon glyphicon-remove"></span></a>
         <h1>{{ post.title }}</h1>
+        <div class="entry-meta">
+            <span class="post-category"><a href="#">{{ post.category.name }}</a></span>
+            <span class="post-date"><a href="#"><time class="entry-date"
+                                                      datetime="{{ post.created_time }}">{{ post.created_time }}</time></a></span>
+            <span class="post-author"><a href="#">{{ post.author }}</a></span>
+            <span class="comments-link"><a href="#">4 评论</a></span>
+            <span class="views-count"><a href="{{ post.get_absolute_url }}">{{ post.views }} 阅读</a></span>
+        </div>
         <p>{{ post.text | safe |linebreaks }}</p>
     </div>
     <hr>
