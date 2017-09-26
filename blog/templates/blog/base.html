@@ -18,7 +18,7 @@
         <link href="//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="{% static 'css/blog.css' %}">
 		<link rel="stylesheet" href="{% static 'css/highlights/github.css' %}">
-		<form role="search" method="get" id="searchform" action="{% url 'search' %}">
+		<form role="search" method="get" id="searchform" action="{% url 'haystack_search' %}">
 		  <input type="search" name="q" placeholder="搜索" required>
 		  <button type="submit"><span class="ion-ios-search-strong"></span></button>
 		</form>
