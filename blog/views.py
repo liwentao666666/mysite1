@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 import logging
 from django.utils import timezone
 from django.shortcuts import redirect
-from .models import Post,Comment,Category
+from .models import Post,Comment,Category,Tag
 from .forms import PostForm,CommentForm
 from django.views.generic import ListView,DetailView
 
@@ -81,6 +81,16 @@ class IndexView(ListView):
             'last':last,
         }
         return data
+
+class TagView(ListView):
+    model = Post
+    template_name = 'blog/post_list.html'
+    context_object_name = 'posts'
+
+    def get_queryset(self):
+        tag = get_object_or_404(Tag, pk = self.kwargs.get('pk'))
+        return super(TagView,self).get_queryset().filter(tags=tag)
+
 
 class CategoryView(ListView):
     model= Post

@@ -20,7 +20,18 @@
             <span class="comments-link"><a href="#">4 评论</a></span>
             <span class="views-count"><a href="{{ post.get_absolute_url }}">{{ post.views }} 阅读</a></span>
         </div>
-        <p>{{ post.text | safe |linebreaks }}</p>
+        <!--p>{{ post.text | safe |linebreaks }}</p-->
+        <div class="entry-content clearfix">
+            {{ post.text|safe }}
+            <div class="widget-tag-cloud">
+                <ul>
+                    标签：
+                    {% for tag in post.tags.all %}
+                        <li><a href="{% url 'tag' tag.pk %}"># {{ tag.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
     </div>
     <hr>
     <a class="btn btn-default" href="{% url 'add_comment_to_post' pk=post.pk %}">Add comment</a>
