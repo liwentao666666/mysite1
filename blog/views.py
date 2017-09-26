@@ -7,6 +7,7 @@ from django.shortcuts import redirect
 from .models import Post,Comment,Category,Tag
 from .forms import PostForm,CommentForm
 from django.views.generic import ListView,DetailView
+from django.db.models import Q
 
 # Create your views here.
 
@@ -233,6 +234,14 @@ def comment_remove(request, pk):
     comment.delete()
     return redirect('post_detail', pk=comment.post.pk)
 
+def search(request):
+    q = request.GET.get('q')
+    error_msg = ''
+    if not q:
+        error_msg= "请输入关键词"
+        return render(request, 'blog/post_list.html', {'error_msg':error_msg})
+    post_list = Post.objects.filter(Q(title__icontains=q) | Q(text__icontains=q))
+    return render(request, 'blog/post_list.html',{'error_msg':error_msg,'post_list':post_list})
 #def archives(request, year ,month):
 #    posts = Post.objects.filter(created_date__year=year,
 #                                    created_date__month=month

@@ -1,5 +1,8 @@
 {% extends 'blog/base.html' %}
 {% block content %}
+    {% if error_msg %}
+      <p>{{ error_msg }}</p>
+    {% endif %}
     {% for post in posts %}
         <div class="post">
             <div class="date">
@@ -23,6 +26,8 @@
  			</div>
 			<a href="{% url 'post_detail' pk=post.pk %}">Comments: {{ post.approved_comments.count }}</a>
         </div>
+        {% empty %}
+            <div class="no-post">暂时还没有发布的文章！</div>
     {% endfor %}
 	{% if is_paginated %}
 	<div class="pagination-simple">
