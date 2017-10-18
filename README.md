@@ -12,3 +12,12 @@ currently work on four functions:
 
 can use print with command:
 python manage.py runserver --noreload 0.0.0.0:80
+
+###########################################################
+HOW to create category and tag?
+>>> from blog.models import Category, Tag, Post
+>>> c = Category(name='category test')
+>>> c.save()
+>>> t = Tag(name='tag test')
+>>> t.save()
+###########################################################
