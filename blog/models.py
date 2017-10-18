@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 import markdown
 from django.utils.html import strip_tags
+from ckeditor_uploader.fields import RichTextUploadingField
 
 from django.db import models
 from django.urls import reverse
@@ -25,7 +26,7 @@ class Tag(models.Model):
 class Post(models.Model):
     author = models.ForeignKey('auth.User')
     title = models.CharField(max_length=200)
-    text = models.TextField()
+    text = RichTextUploadingField(verbose_name='正文')
     excerpt = models.CharField(max_length=200,blank=True)
     created_date = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(blank=True,null=True)
