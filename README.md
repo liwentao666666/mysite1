@@ -21,3 +21,11 @@ HOW to create category and tag?
 >>> t = Tag(name='tag test')
 >>> t.save()
 ###########################################################
+
+show full columns from blog_post_tags;
+alter table blog_comment modify author varchar(200) character set utf8; 
+
+
+#############################################
+更改每页文章数:在blog/views.py中的 paginate_by参数
+##################################################
