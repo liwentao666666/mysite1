@@ -25,7 +25,6 @@
         </div>
         <!--p>{{ post.text | safe |linebreaks }}</p-->
         <div class="entry-content clearfix">
-            {{ post.text|safe }}
             <div class="widget-tag-cloud">
                 <ul>
                     标签：
@@ -34,6 +33,7 @@
                     {% endfor %}
                 </ul>
             </div>
+            {{ post.text|safe }}
         </div>
     </div>
     <hr>
